@@ -4,7 +4,7 @@ Sodacloud Documentation
 Overview of SodaCloud
 ------------
 SodaCloud is a shared object distribution architecture for cloud systems. 
-SodaCloud provides a platform that automatically creates mobile/cloud applications with optimized communications,
+SodaCloud provides a platform that automatically creates mobile/cloud applications [wording] with optimized communications,
 cloud-based data sharding, cyber-physical information usage (e.g. geo-located data), 
 and code generation / testing methods for ensuring platform correctness. 
 
@@ -13,11 +13,11 @@ security requirements and automatically generate an entire system backbone. The 
 to enter key system logic manually, while the backbone will take care of client/cloud communications, 
 automatic platform instrumentation and replay of request data for QA, data marshaling infrastructure, 
 and capture of key performance / cloud resource sizing data to aid in resource allocation decisions and 
-operations cost optimization.
+operations cost optimization. [bulleted list]
 
 ![Soda L](Docs/images/architecture.PNG "Soda")
 
-SodaCloud supports automatic creation of cloud mobile client to cloud server communication infrastructure,
+SodaCloud supports automatic creation of cloud mobile client to cloud server [does the word cloud need to be here?] communication infrastructure,
 including data marshaling mechanisms, that alleviate the need for developers to hand-code complex 
 asynchronous communication pathways and optimize underlying protocols for the target API. 
 
@@ -48,7 +48,7 @@ to handle this.
 - In Java server-side: 
 
 Class “MaintenanceReports” is declared. It stores the reports and listeners for the reports in lists. When a new
-report is uploaded, it will be added to the list of report and all the listeners will be notified.
+report is uploaded, it will be added to the list of report[s] and all the listeners will be notified.
   
 ```java  
 public class MaintenanceReportsImpl implements MaintenanceReports {
@@ -82,7 +82,7 @@ public interface MaintenanceListener {
 }
 ```
 
-AndroidSoda.async() is the method to call when you need to invoke 
+AndroidSoda.async() is the method to call when you need to invoke [a]
 network connection with server. A new thread will be created. The reportHandle is fetched from server using SVC naming service.
 A listener is implemented and then added to the handle. Remember to annotate with @SodaInvokeInUi if you try to make any 
 changes to UI elements. In the end, addReport() method is called to add the new report to the server.
@@ -112,7 +112,7 @@ Overview of supported platforms
 ------------
 Android, Javascript, iOS.
 
-Setting up a Java server-side project
+Setting up a Java server-side project [these could be clearer - what all do I need installed already?]
 ------------
 1.Download SodaCloud and SodaCloudJetty project. SodaCloud is the fundamental library project for all the marshalling 
 and abstraction logic. SodaCloudJetty is a built upon Jetty which provides HTTP server and servlet container.
@@ -136,7 +136,7 @@ be called when the server is launched.
 4.Defining interfaces for remoteable objects
 
 Here we define the manage interface “MaintenanceReports”.
-A unique string needs to be defined for the object. It can be used later for looking up objects with naming service.
+A unique string needs to be defined for the object [is this SVC_NAME or the UUID?]. It can be used later for looking up objects with naming service.
 ```java
 public interface MaintenanceReports {
 		public static final String SVC_NAME = "maintenance";
@@ -146,7 +146,7 @@ public interface MaintenanceReports {
 ……
 }
 ```
-5.How to bind objects
+5.How to bind objects [why do we do this?]
 
 To bind an object, call the function soda.bind(object, SVC_NAME); 
 Where the first parameter is the object to be bind and the second parameter is the String of its SVC name.
@@ -154,7 +154,7 @@ Where the first parameter is the object to be bind and the second parameter is t
 ```java
 soda.bind(reports, MaintenanceReports.SVC_NAME);
 ```
-6.How dynamic proxies are created
+6.How dynamic proxies are created [should this be part of the instructions?]
 
 After the call of soda.bind(), the proxies of the object are created automatically by Soda. The process happens in DefaultNamingService.java.
 
@@ -172,18 +172,18 @@ passed by reference.
 b.	In Java, generic collections are not supported for incoming pass by
 value types because Java does not have reified generic types.
 
-Setting up an Android project
+Setting up an Android project [again, I need to know what I need installed]
 ------------
 
 1.Create a new Android project in eclipse and import the SodaCloudAndroid library project.
 
-2.Setting the correct permissions in AndroidManifest.xml file.
+2.Setting the correct permissions in AndroidManifest.xml file. [what are they?]
 
-3.Initializing AndroidSoda and connecting
+3.Initializing AndroidSoda and connecting [what does this mean?]
 
 a)The activity will need to implement AndroidSodaListener interface and override the connected() method. 
 Then AndroidSoda.init() will call the connected() method and return the AndroidSoda object. After that, 
-you can use AndroidSoda for any connection with the server.
+you can use AndroidSoda for any connection with the server. [maybe explain this a little more clearly]
 
 ```java
    public class MainActivity extends Activity implements AndroidSodaListener {
@@ -205,7 +205,7 @@ you can use AndroidSoda for any connection with the server.
 
 4.Looking up objects on the server with the naming service
 
-To start a query, call AndroidSoda.async() method. The lookup is by calling the get() method of AndroidSoda. 
+To start a query, call AndroidSoda.async() method. The lookup is by calling the get() method of AndroidSoda. [explain why you are using async()]
 
 ```java
  		AndroidSoda.async(new Runnable() {
@@ -222,7 +222,7 @@ To start a query, call AndroidSoda.async() method. The lookup is by calling the 
 When the AndroidSoda is initialized, a new thread is created. The network operation is conducted in the new thread. 
 A callback is passed as parameter which handles the result of the network communication. 
 The update of UI after network communication is always done on UI thread of Android. 
-his is ensured by using @SodaInvokeInUi annotation.
+his is ensured by using @SodaInvokeInUi annotation. [cool!]
 
 7.Use of the Soda annotations for interactions with the UI thread
 
@@ -237,7 +237,7 @@ Android will freak out for doing network ops in the gui thread.
 @SodaByValue 
 This annotation marks classes that should be passed by value rather than object reference.
 
-9.Sharing object references via QR code
+9.Sharing object references via QR code [this is really cool]
 
 To share an object via QR code, you need to bind the QR code context to the object. 
 SodaQR is created from a QR image and bind to Soda object.
@@ -249,7 +249,7 @@ public void bindQRContext(Soda s, MaintenanceReport r) {
 	}
 ```
 To lookup object based on QR code, use soda.find() method where the first parameter is the class type and 
-second parameter is SodaContext. The returned SodaQuery is passed in to callback for asynchronized running.
+second parameter is SodaContext. The returned SodaQuery is passed in to callback for asynchronized running. [what are the parameters here]
 
 ```java
 SodaQR _objQR = SodaQR.fromImageData(b);
