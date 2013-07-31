@@ -137,6 +137,7 @@ be called when the server is launched.
 
 Here we define the manage interface “MaintenanceReports”.
 A unique string needs to be defined for the object [is this SVC_NAME or the UUID?]. It can be used later for looking up objects with naming service.
+[Where does this MaintenanceReport object come from?]
 ```java
 public interface MaintenanceReports {
 		public static final String SVC_NAME = "maintenance";
@@ -150,7 +151,7 @@ public interface MaintenanceReports {
 
 To bind an object, call the function soda.bind(object, SVC_NAME); 
 Where the first parameter is the object to be bind and the second parameter is the String of its SVC name.
-
+[Where does this code go?]
 ```java
 soda.bind(reports, MaintenanceReports.SVC_NAME);
 ```
@@ -162,7 +163,7 @@ After the call of soda.bind(), the proxies of the object are created automatical
 ObjRef ref = new ObjRef("" + data.get("uri"),type.getName());
 obj = (T)proxyFactory_.createProxy(new Class[]{type}, ref);
 ```
-
+[how do I start it?]
 
 7.Java implementation limitations
 
@@ -230,7 +231,7 @@ his is ensured by using @SodaInvokeInUi annotation. [cool!]
 This annotation marks methods that should always be invoked by Soda in the context of the UI thread on Android. 
 If you apply this annotation, you cannot invoke any blocking Soda methods 
 (e.g. any Soda methods that are not void and annotated with @SodaAsync) inside of the method or 
-Android will freak out for doing network ops in the gui thread.
+Android will freak out for doing network ops in the gui thread. [wording :-)]
 
 8.Use of the Soda annotations for pass by reference and pass by value
 
